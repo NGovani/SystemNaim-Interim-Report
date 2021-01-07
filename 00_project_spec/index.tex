@@ -1,7 +1,6 @@
-\chapter{Project Specification}
+\chapter{Background}
 
-\section{Introduction}
-\subsection{FPGAs}
+\section{FPGAs}
 FPGAs(Field-Programmable Gate Arrays) have been around for since the the 1980s and have served various purposes over the years. They boast a faster time-to-market than ASICs whilst still providing a performance boost when compared to software running on a GPPs(General purpose processor). These features, amongst others, make FPGAs favourable for a variety of uses including:
 \begin{itemize}
     \item Prototyping
@@ -12,10 +11,17 @@ FPGAs(Field-Programmable Gate Arrays) have been around for since the the 1980s a
 
 In more technical terms an FPGA is a large collection of LEs(Logic Elements) which can programmed using a HDL(Hardware Description Language) such as Verilog. Each of these LEs can only perform a small amount of logic such as implementing an AND/OR gate but an average FPGA comes with tens of thousands of them allowing for large amounts of logic to be strung together. The important fact is that, once programmed, an FPGA becomes a piece of hardware dedicated to performing a fixed operation and thus, if programmed correctly, gives lower latencies and higher-throughputs alongside lower power requirements than the same operation being conducted in software on a GPP. To summarise, if a user is looking for a way to decrease the latency, or increase the throughput, of a rapidly changing system, an FPGA would definitely be a strong contender for a solution. 
 
-\subsection{HLS Tools}
-Notice however, that in my section above I explicitly mentioned that benefits of using an FPGA only came if the device in question is programmed correctly. Now correctness in this context refers to multiple things. Firstly, the operation must be suited to an FPGA. This can include data access patterns or whether or not the application has a large amount of parallelism the programmer can exploit, but the key takeaway is that not all programs are suited to being executed on an FPGA and some may perform better on a GPP and it is up to the designer/programmer to make this judgement call.
+\section{HLS Tools}
+Notice however, that in the section above it was explicitly mentioned that benefits of using an FPGA only came if the device in question is programmed correctly. Now correctness in this context refers to multiple things. Firstly, the operation must be suited to an FPGA. This can include data access patterns or whether or not the application has a large amount of parallelism the programmer can exploit, but the key takeaway is that not all programs are suited to being executed on an FPGA and some may perform better on a GPP and it is up to the designer/programmer to make this judgement call.
 
-However, in this report we are more concerned about another aspect of correctness; the difficulty of creating optimised HDL code.
+In this report, however, we are more concerned about another aspect of correctness; the difficulty of writing HDL code. FPGA development is notoriously difficult due to the lack of individuals with the skills to write HDL code targeted at FPGAs. The cause of this issue is two-fold, one is that FPGA usage isn't very well known and the second being the paradigm shift between standard programming, such as in languages like C++ or python, and programming with a HDL. An entire report could be written to explain the differences between hardware and software programming but the key takeaway here should be that it's very difficult to shift between the two which results in less people who can exploit the benefits of an FPGA as effectively. To help solve this problem HLS(High-Level Synthesis) tools have been researched and created both by academics and industry leader. From Xilinx we have Vivado and from Intel we have OpenCL.
+
+These tools allow users to write code in C++/C which is then transpiled to Verilog for use on an FPGA. In order to create optimised code these tools include configuration options and a feature known as PRAGMAS, which allow the programmer more control over how their code is turned into hardware, this addition does mean there is some barrier to entry when using these tools however it much less than going from C++ to Verilog. 
+
+Overall these tools allows for a much easier transfer of skills from normal programming to hardware design, paving the way for a larger part of industry and academia to gain the potential benefits of using an FPGA, and thus research into making these tools more accessible and on par with pure Verilog design is very appealing when one considers the rising usage FPGAs and dedicated hardware in variety of fields.
+
+\section{Multi-FPGA Communication}
+
 
 
 
