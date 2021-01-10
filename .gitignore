@@ -24,3 +24,5 @@
 *.fdb_latexmk
 *.fls
 *.pdf
+*.bcf
+*.xml

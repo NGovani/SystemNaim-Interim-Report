@@ -1,7 +1,7 @@
 \chapter{Background}
 
 \section{FPGAs}
-FPGAs(Field-Programmable Gate Arrays) have been around for since the the 1980s and have served various purposes over the years. They boast a faster time-to-market than ASICs whilst still providing a performance boost when compared to software running on a GPPs(General purpose processor). These features, amongst others, make FPGAs favourable for a variety of uses including:
+FPGAs(Field-Programmable Gate Arrays) have been around for since the the 1980s and have served various purposes over the years\cite{fpga-history}. They boast a faster time-to-market than ASICs whilst still providing a performance boost when compared to software running on a GPPs(General purpose processor). These features, amongst others, make FPGAs favourable for a variety of uses including:
 \begin{itemize}
     \item Prototyping
     \item Hardware Emulation
@@ -14,15 +14,23 @@ In more technical terms an FPGA is a large collection of LEs(Logic Elements) whi
 \section{HLS Tools}
 Notice however, that in the section above it was explicitly mentioned that benefits of using an FPGA only came if the device in question is programmed correctly. Now correctness in this context refers to multiple things. Firstly, the operation must be suited to an FPGA. This can include data access patterns or whether or not the application has a large amount of parallelism the programmer can exploit, but the key takeaway is that not all programs are suited to being executed on an FPGA and some may perform better on a GPP and it is up to the designer/programmer to make this judgement call.
 
-In this report, however, we are more concerned about another aspect of correctness; the difficulty of writing HDL code. FPGA development is notoriously difficult due to the lack of individuals with the skills to write HDL code targeted at FPGAs. The cause of this issue is two-fold, one is that FPGA usage isn't very well known and the second being the paradigm shift between standard programming, such as in languages like C++ or python, and programming with a HDL. An entire report could be written to explain the differences between hardware and software programming but the key takeaway here should be that it's very difficult to shift between the two which results in less people who can exploit the benefits of an FPGA as effectively. To help solve this problem HLS(High-Level Synthesis) tools have been researched and created both by academics and industry leader. From Xilinx we have Vivado and from Intel we have OpenCL.
+In this report, however, we are more concerned about another aspect of correctness; the difficulty of writing HDL code. FPGA development is notoriously difficult due to the lack of individuals with the skills to write HDL code targeted at FPGAs. The cause of this issue is two-fold, one is that FPGA usage isn't very well known and the second being the paradigm shift between standard programming, such as in languages like C++ or python, and programming with a HDL. An entire report could be written to explain the differences between hardware and software programming but the key point is that its very difficult to shift between the two which results in less people who have the skills to exploit the benefits of an FPGA effectively. To help solve this problem HLS(High-Level Synthesis) tools have been researched and created both by academics and industry leader. From Xilinx we have Vivado and from Intel we have OpenCL.
 
 These tools allow users to write code in C++/C which is then transpiled to Verilog for use on an FPGA. In order to create optimised code these tools include configuration options and a feature known as PRAGMAS, which allow the programmer more control over how their code is turned into hardware, this addition does mean there is some barrier to entry when using these tools however it much less than going from C++ to Verilog. 
 
-Overall these tools allows for a much easier transfer of skills from normal programming to hardware design, paving the way for a larger part of industry and academia to gain the potential benefits of using an FPGA, and thus research into making these tools more accessible and on par with pure Verilog design is very appealing when one considers the rising usage FPGAs and dedicated hardware in variety of fields.
+Overall these tools allows for a much easier transfer of skills from normal programming to hardware design, paving the way for a larger part of industry and academia to gain the potential benefits of using an FPGA. Therefore, research into making these tools more accessible and on par, performance wise, with pure Verilog design is very appealing when one considers the rising usage FPGAs in variety of fields\cite{fpga-market}.
 
 \section{Multi-FPGA Communication}
 
+One of the major limitations of any hardware implementation is the resources available to a programmer on the device. Examples of such resources are:
 
+\begin{itemize}
+    \item \textbf{BRAMs}: For on-chip storage
+    \item \textbf{DRAM Bandwidth}: For accessing off-chip memory
+    \item \textbf{DSPs}: For floating-point arithmetic
+    \item \textbf{LUTs}: For logic processing 
+\end{itemize}
 
+If the programmer finds themselves having exhausted the resources on the board but still in need of more, they have a few options that they can explore. The first and usually the most practical is to re-structure the design. This may include adding pipeline stages to remove timing violations, moving to data storage off-chip to increase on-chip memory space or reusing modules in multiple parts of the design to save on LUTs. All optimisations while viable do have downsides and considerations the programmer must take in to account before proceeding. The next option would be a too get a device with more resources available, while ideal this option may not be possible either because the new device would be too expensive or more likely the programmer has been given a specification and a part of it is to use this specific device. The third option and the one of interest to this report is to use multiple FPGAs in parallel to compute different parts of the system giving the programmer access to more resources in doing so.
 
- 
+Utilising a multi-FPGA system to overcome the limitations of a single FPGA has been the focal point for many research fronts including: DNN Inference\cite{10.1145/3358192}, Energy Conversion System Simulation\cite{8822485}, Large Graph Processing\cite{10.1145/3020078.3021739}, and CNN Acceleration \cite{10.1145/3337821.3337846}
