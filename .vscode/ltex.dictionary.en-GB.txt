@@ -1,0 +1,11 @@
+System-Naim
+FPGAs
+GPPs
+Xilinx
+Vivado
+PRAGMAS
+BRAMs
+DSPs
+LUTs
+DNN
+LEs
