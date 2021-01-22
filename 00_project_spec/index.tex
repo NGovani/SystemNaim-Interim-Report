@@ -2,7 +2,7 @@
 
 \section{Aims}
 
-The aim of System-Naim is to create a HLS tool which allows users to target a multi-FPGA system. Most modern HLS tools, which will be touched on later, require the user to manually specify the split of the system and implement their own communication protocol. This project intends to alleviate the effort that must be put in by the user by automating much of the process.
+The aim of SystemNaim is to create a HLS tool which allows users to target a multi-FPGA system. Most modern HLS tools, which will be touched on later, require the user to manually specify the split of the system and implement their own communication protocol. This project intends to alleviate the effort that must be put in by the user by automating much of the process.
 
 \section{Motivation}
 
@@ -22,11 +22,11 @@ In more technical terms an FPGA is a large collection of LE(Logic Elements) whic
 
 \subsection{HLS Tools}
 
-Notice however, that in the section above it was explicitly mentioned that benefits of using an FPGA only came if the device in question is programmed correctly. Now correctness in this context refers to multiple things. Firstly, the operation must be suited to an FPGA. This can include data access patterns or whether the application has a large amount of parallelism the programmer can exploit, but the key takeaway is that not all programs are suited to being executed on an FPGA and some may perform better on a GPP, and it is up to the designer/programmer to make this judgement call.
+Notice however, that in the section above it was explicitly mentioned that benefits of using an FPGA only came if the device in question is programmed correctly. Now correctness in this context refers to multiple things. Firstly, the operation must be suited to an FPGA. This can include data access patterns or whether the application has a large amount of parallelism the programmer can exploit, but the key takeaway is that not all programs are suited to being executed on an FPGA with some performing better on modern GPPs, and it is thus up to the designer/programmer to make this judgement call.
 
-In this section, however, we are more concerned about another aspect of correctness; the difficulty of writing HDL code. FPGA development is notoriously difficult due to the lack of individuals with the skills to write HDL code targeted at FPGAs. The cause of this issue is two-fold, one is that FPGA usage isn't very well known and the second being the paradigm shift between standard programming, such as in languages like C++ or python, and programming with an HDL. An entire report could be written to explain the differences between hardware and software programming, but the key point is that it's very difficult to shift between the two which results in fewer people who have the skills to exploit the benefits of an FPGA effectively. To help solve this problem HLS(High-Level Synthesis) tools have been researched and created both by academics and industry leader. From Xilinx we have Vivado and from Intel we have OpenCL.
+In this report, however, we are more concerned about another aspect of correctness; the difficulty of writing HDL code. FPGA development is notoriously difficult due to the lack of individuals with the skills to write HDL code specifically targeted at FPGAs. The cause of this issue is two-fold, one is that FPGA usage isn't very well known and the second being the paradigm shift between programming in languages such as: C++ or python, and programming in a HDL like Verilog. An entire report could be written to explain the differences between hardware and software programming, but the main point is that it is very difficult to shift between the two paradigms which results in fewer people who have the skills to exploit the benefits of an FPGA effectively. To help solve this problem, HLS(High-Level Synthesis) tools have been actively researched over the last 40 years~\cite{5209959}, and now we have a variety of products such as Vivado HLS from Xilinx, Intel® High Level Synthesis Compiler from Intel and LegUp from Microchip.
 
-These tools allow users to write code in C++/C which is then transpiled to Verilog for use on an FPGA. In order to create optimised code these tools include configuration options and a feature known as PRAGMAS, which allow the programmer more control over how their code is turned into hardware, this addition does mean there is some barrier to entry when using these tools however it is much less than going from C++ to Verilog. 
+These tools allow users to write code in C++/C, which is then transpiled to Verilog for use on an FPGA. In order to create optimised code these tools include configuration options and extra syntax building upon the language they are based in, thus allowing the programmer more control over how their code is turned into hardware, this addition does mean there is some learning curve to using these tools however it is much less than going from C++ to Verilog. 
 
 Overall these tools allows for a much easier transfer of skills from normal programming to hardware design, paving the way for a larger part of industry and academia to gain the potential benefits of using an FPGA. Therefore, research into making these tools more accessible and on par, performance wise, with pure Verilog design is very appealing when one considers the rising usage FPGAs in variety of fields\cite{fpga-market}.
 
@@ -47,11 +47,11 @@ Utilising a multi-FPGA system to overcome the limitations of a single FPGA has b
 
 \section{Deliverables}
 
-This project consists mainly of two deliverables, one is the HLS tool, System-Naim, which is entirely based in software and the other is an analytical report of the tool itself. This report will evaluate the efficacy of the System-Naim as well as indicate areas where further development would be beneficial.
+This project consists mainly of two deliverables, one is the HLS tool, SystemNaim, which is entirely based in software and the other is an analytical report of the tool itself. This report will evaluate the efficacy of the SystemNaim as well as indicate areas where further development would be beneficial.
 
-\subsection{System-Naim}
+\subsection{SystemNaim}
 
-As previously stated, the aim of System-Naim is to create a HLS tool which allows users to target a multi-FPGA system. However, we must acknowledge that this being an FYP there a time constraint which will limit the amount of work possible. Therefore, some limitations have been placed on the scope of System-Naim in order to ensure that a working tool can be produced. They are as follows:
+As previously stated, the aim of SystemNaim is to create a HLS tool which allows users to target a multi-FPGA system. However, we must acknowledge that this being an FYP there a time constraint which will limit the amount of work possible. Therefore, some limitations have been placed on the scope of SystemNaim in order to ensure that a working tool can be produced. They are as follows:
 
 \begin{itemize}
     \item The input will be a single source file following a subset of ANSI C90. The limitations of the language are:
@@ -65,10 +65,38 @@ As previously stated, the aim of System-Naim is to create a HLS tool which allow
 
 It should be noted that these limitations are subject to change and certain design choices will introduce more. Also, if work on the base tool is completed sooner than expected, some of these limitations will be removed and work will be done to increase scope of the tool. If this is the case then the two expansions that would be of most interest are the allowing of passing arrays between functions and more than two FPGAs communicating.
 
-The output of System-Naim will be a collection of Verilog HDL files which perform the same computation as the provided input file and with each FPGA receiving its own top file. The target devices have yet to be decided, however, it is likely that regardless of this choice the output files will simply be accompanied by a guide on how to implement the design using the currently available synthesis tools. It is also yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. This choice will be made after the target device is chosen and depends upon the difficulty of incorporating these libraries into the tool.
+The output of SystemNaim will be a collection of Verilog HDL files which perform the same computation as the provided input file and with each FPGA receiving its own top file. The target devices have yet to be decided, however, it is likely that regardless of this choice the output files will simply be accompanied by a guide on how to implement the design using the currently available synthesis tools. It is also yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. This choice will be made after the target device is chosen and depends upon the difficulty of incorporating these libraries into the tool.
+
+To prove the tool works, a minimum of two FPGAs will be used for test purposes. While these are not part of the deliverable, it is worth noting that there is an intrinsic hardware component to this project.
 
 
-\subsection{Analytical Report}
+\subsection{Analytical Report/ Evaluation Plan}
 
-The analysis report will 
+The analysis report serves to test whether the features implemented in SystemNaim offers any benefit to the user. While all projects need a report such as this, it is much more important to this FYP as its entire purpose is to improve quantifiable metrics. To be specific, time-to-market and performance are the key metrics this tool should improve upon. It should be easier for a user to create a multi-FPGA system using SystemNaim than existing tools, and they should be able to observer a measurable speed up when doing so.
+
+\subsubsection{User Difficulty}
+For the time-to-market metric we intend to compare against other available HLS tools as well as writing a system in pure Verilog. Not only will the time-taken be considered but also the amount of extra research a user must do in order to achieve their desired design. Ideally, this evaluation will be done by asking a sample of individuals to implement a multi-FPGA system using a variety of tools.
+
+\subsubsection{Performance}
+On the other hand, the performance metric has a few more complications that we must consider. 
+
+Firstly, performance is a vague term, and we must define more specific metrics in order to measure this value. There are two main metrics that shall be used in this report: 
+
+\begin{itemize}
+    \item \textbf{Latency}: The amount of time it takes for a system to compute it's intended function. Measured either in milliseconds or cycles.
+    \item \textbf{Resource Usage}: The amount of resources a system takes up on an FPGA. Measures in number of LUTs, BRAMs and DSPs.
+\end{itemize}
+
+These metrics can be further broken down, however for the purpose of this project these will tell us all the information we need\footnote{Throughput may also be seen as important however with loop pipe-lining likely not being implemented it serves little purpose.}.
+
+Tools such as Vivado HLS or LegUp have spent years in development and thus comparing the latency of a design produced by a product of their calibre versus something made in less than 6 months would not benefit any evaluation of the specific issue SystemNaim aims to solve, creating multi-FPGA systems. If we were to compare SystemNaim to an industry tool, we wouldn't be able to see the benefit of using multiple FPGAs to increase the performance of a system. Rather, we would merely see how much better optimised the Verilog that the industry tools produce is, over SystemNaim's output Verilog.
+
+Therefore, the methodology we intend to use to measure performance is to compare the latency and resource usage of a single FPGA system created using SystemNaim and a multi-FPGA system created from the same tool. This way we can identify the performance increase/decrease specifically attributed to the tool's method of implementing multi-FPGA systems. 
+
+The conclusion that we hope to draw from this, is that if this method of automating the connection between multiple FPGAs is beneficial then it is possible to expand this methodology to other tools. So even if the core HLS aspect of SystemNaim is subpar, the process by which it creates multi-FPGA systems adds value to the field of research.
+
+
+
+
+
 

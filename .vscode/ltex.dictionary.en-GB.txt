@@ -9,3 +9,5 @@ DSPs
 LUTs
 DNN
 LEs
+SystemNaim
+LegUp

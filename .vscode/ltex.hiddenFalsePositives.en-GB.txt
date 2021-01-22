@@ -1,0 +1,1 @@
+{"rule":"EN_A_VS_AN","sentence":"^\\QThe cause of this issue is two-fold, one is that FPGA usage isn't very well known and the second being the paradigm shift between programming in languages such as: C++ or python, and programming in a HDL like Verilog.\\E$"}
