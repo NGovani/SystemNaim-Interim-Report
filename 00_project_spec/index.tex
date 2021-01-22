@@ -75,12 +75,10 @@ To prove the tool works, a minimum of two FPGAs will be used for test purposes. 
 The analysis report serves to test whether the features implemented in SystemNaim offers any benefit to the user. While all projects need a report such as this, it is much more important to this FYP as its entire purpose is to improve quantifiable metrics. To be specific, time-to-market and performance are the key metrics this tool should improve upon. It should be easier for a user to create a multi-FPGA system using SystemNaim than existing tools, and they should be able to observer a measurable speed up when doing so.
 
 \subsubsection{User Difficulty}
-For the time-to-market metric we intend to compare against other available HLS tools as well as writing a system in pure Verilog. Not only will the time-taken be considered but also the amount of extra research a user must do in order to achieve their desired design. Ideally, this evaluation will be done by asking a sample of individuals to implement a multi-FPGA system using a variety of tools.
+For the time-to-market metric we intend to compare against other available HLS tools as well as pure Verilog. Not only will the time-taken to implement a given system be considered but also the amount of extra research a user must do in order to achieve their desired design. Ideally, this evaluation will be done by asking a sample of individuals to implement a multi-FPGA system using a variety of tools.
 
 \subsubsection{Performance}
-On the other hand, the performance metric has a few more complications that we must consider. 
-
-Firstly, performance is a vague term, and we must define more specific metrics in order to measure this value. There are two main metrics that shall be used in this report: 
+On the other hand, the performance metric has a few more complications that we must consider. Firstly, performance is a vague term, and we must define more specific metrics in order to measure this value. There are two main metrics that shall be used in this report: 
 
 \begin{itemize}
     \item \textbf{Latency}: The amount of time it takes for a system to compute it's intended function. Measured either in milliseconds or cycles.
@@ -89,7 +87,7 @@ Firstly, performance is a vague term, and we must define more specific metrics i
 
 These metrics can be further broken down, however for the purpose of this project these will tell us all the information we need\footnote{Throughput may also be seen as important however with loop pipe-lining likely not being implemented it serves little purpose.}.
 
-Tools such as Vivado HLS or LegUp have spent years in development and thus comparing the latency of a design produced by a product of their calibre versus something made in less than 6 months would not benefit any evaluation of the specific issue SystemNaim aims to solve, creating multi-FPGA systems. If we were to compare SystemNaim to an industry tool, we wouldn't be able to see the benefit of using multiple FPGAs to increase the performance of a system. Rather, we would merely see how much better optimised the Verilog that the industry tools produce is, over SystemNaim's output Verilog.
+The second issue is that tools such as Vivado HLS or LegUp have spent years in development and thus comparing the latency of a design produced by a product of their calibre versus something made in less than 6 months would not benefit any evaluation of the specific issue SystemNaim aims to solve. If we were to compare SystemNaim to an industry tool, we wouldn't be able to see the benefit of using multiple FPGAs to increase the performance of a system. Rather, we would merely see how much better optimised the Verilog that the industry tools produce is, over SystemNaim's output Verilog.
 
 Therefore, the methodology we intend to use to measure performance is to compare the latency and resource usage of a single FPGA system created using SystemNaim and a multi-FPGA system created from the same tool. This way we can identify the performance increase/decrease specifically attributed to the tool's method of implementing multi-FPGA systems. 
 
