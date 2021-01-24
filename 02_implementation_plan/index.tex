@@ -16,6 +16,7 @@ Due to the potentially large scope of this project, it is beneficial to have a t
 Figure \ref{gantt} shows the allocated time for each task along with time taken off for exams. Milestones on the chart indicate deadlines for the respective deliverable and arrows show dependencies between tasks.
 
 \begin{figure}[h]
+    \begin{center}
     \begin{ganttchart}[y unit title=0.9cm,
         y unit chart=0.5cm,
         vgrid,
@@ -30,7 +31,9 @@ Figure \ref{gantt} shows the allocated time for each task along with time taken 
         milestone/.append style={xscale=0.25},
         group height=0.1]{1}{21}
         %labels
-        \gantttitle{Summer \& Spring Term}{21} \\
+        \gantttitle{Spring Term}{8}
+        \gantttitle{}{3}
+        \gantttitle{Summer Term}{10} \\
         %months
         \gantttitle{Febuary}{4} 
         \gantttitle{March}{5} 
@@ -72,7 +75,7 @@ Figure \ref{gantt} shows the allocated time for each task along with time taken 
         \ganttbar{Multi-FPGA HLS}{11}{11}
         \ganttbar{}{13}{16} \ganttnewline
         \ganttbar{Evaulation}{17}{18} \ganttnewline
-        \ganttbar[bar/.style={fill=yellow!70}]{\textit{Exams}}{9}{9}
+        \ganttbar[bar/.style={fill=yellow!70}]{\textit{Exam Revision}}{9}{9}
         \ganttbar[bar/.style={fill=yellow!70}]{}{12}{12} \ganttnewline
         \ganttgroup{\textbf{Deliverables}}{16}{21} \ganttnewline
         \ganttbar[bar right shift=-0.4]{Report Writing}{16}{20} \ganttnewline
@@ -85,7 +88,39 @@ Figure \ref{gantt} shows the allocated time for each task along with time taken 
         \ganttlink{elem3}{elem4} 
         \ganttlink{elem5}{elem6}
     \end{ganttchart}
-\caption{Gantt chart showing proposed project time plan}
-\label{gantt}
+    \caption{Gantt chart showing estimated project time plan}
+    \label{gantt}
+    \end{center}
 \end{figure}
 
+\section{Single-FPGA HLS Tool}
+
+The first part of the project covers creating the initial HLS tool which can map high-level code, such as C++ or Java, into Verilog. Six weeks were allocated to completing this, not because it's the most time-consuming part but rather because during the spring term there will be other modules and coursework that need to be focused on.
+
+There is an aspect of hardware testing towards the end of the six weeks which may require more of a time investment to complete, however, by this point most other modules will have been completed and there will be more time to focus on this FYP.
+
+\section{Multi-FPGA Communication Hardware}
+
+The second part of the project concerns itself with the development of the communication hardware which allows multiple FPGAs to communicate. As of now a limitation has been placed two only have two FPGAs, which greatly simplifies the task. Therefore, only 3 weeks have been allocated to this task, with a gap of one week to allow for exam revision. Work may be done during this week, but it is unlikely.
+
+It should be noted that if work is completed ahead of schedule it would definitely be of interest to design a system which would scale beyond two FPGAs.
+
+\section{Multi-FPGA HLS Tool}
+
+The third and probably most difficult part of project is to incorporate the hardware developed in part 2 into the tool developed in part 1. This will likely involve changing the grammar of the source code as well as vigorous simulation and debugging. A lot of obstacles may arise during this part which is why it was given 5 weeks, with 4 of them being completely uninterrupted by other coursework or exams.
+
+\section{Evaluation}
+
+The final part and likely the most straightforward is the evaluation of the tool. Here, the tools will be used and measure in accordance to the evaluation plan specified in \autoref{subsec:eval_plan}. If testing of the tool has gone to plan, this part should only take two weeks, potentially even less if the exact methodology of evaluation is considered during previous parts.
+
+\section{Report Writing}
+
+The major deliverable of this FYP is the final report and thus work on it must start in parallel to the main development. Even thought \autoref{gantt} only shows the report writing to start during the last week of the Multi-FPGA HLS Tool development, a log book of all design choices and obstacles will be kept from the beginning of development. The time allocated in the Gantt chart only shows when formal writing of the report starts. 
+
+Given that the deadline for the initial draft and abstract is on the 31st of May, which is during the time Evaluation part will be ongoing, the majority of the project will already be complete meaning that most sections of the report will already have been filled in.
+
+Two weeks has been allocated before this deadline to allow ample time to write up all the sections, and then a further two and a half weeks has been given to not only respond to feedback but also as a safety buffer in case not as much of the report was written as was hoped.
+
+\section{Presentation}
+
+The presentation is the final deliverable, and it makes sense to start preparing it after main development has been completed thus ensuring a true overview of what has been achieved. Two and a half weeks have been allocated to prepare this section with the major of the work likely being done after the final deadline for the report.
