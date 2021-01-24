@@ -1,0 +1,91 @@
+\chapter{Implementation Plan}
+
+\section{Introduction}
+
+Due to the potentially large scope of this project, it is beneficial to have a timeline/plan of when different aspects of the SystemNaim must be complete so at to not overextend and result in the final deliverable not being able to produce interesting results. Therefore, the project has been broken down into 4 major milestones.
+
+
+\begin{enumerate}[label=\textbf{\arabic*.},ref=\textbf{\arabic*}]
+    \item \label{hls} Development of single-FPGA HLS tool
+    \item \label{hardware} Development of multi-FPGA communication hardware
+    \item \label{multi-HLS}Incorporation of hardware from \ref{hardware} into \ref{hls}
+    \item \label{Eval}Evaluation of SystemNaim
+\end{enumerate}
+
+
+Figure \ref{gantt} shows the allocated time for each task along with time taken off for exams. Milestones on the chart indicate deadlines for the respective deliverable and arrows show dependencies between tasks.
+
+\begin{figure}[h]
+    \begin{ganttchart}[y unit title=0.9cm,
+        y unit chart=0.5cm,
+        vgrid,
+        title label anchor/.style={below=-1.6ex},
+        title left shift=.05,
+        title right shift=-.05,
+        title height=1,
+        bar/.style={fill=violet!70},
+        bar height=0.6,
+        bar top shift =0.2,
+        milestone left shift=-0.3,
+        milestone/.append style={xscale=0.25},
+        group height=0.1]{1}{21}
+        %labels
+        \gantttitle{Summer \& Spring Term}{21} \\
+        %months
+        \gantttitle{Febuary}{4} 
+        \gantttitle{March}{5} 
+        \gantttitle{April}{4} 
+        \gantttitle{May}{5} 
+        \gantttitle{June}{3}  \\
+        %feb weeks
+        \gantttitle{\begin{sideways}\tiny01/02\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny08/02\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny15/02\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny22/02\end{sideways}}{1}
+        %march weeks
+        \gantttitle{\begin{sideways}\tiny01/03\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny08/03\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny15/03\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny22/03\end{sideways}}{1}
+        \gantttitle{\begin{sideways}\tiny29/03\end{sideways}}{1}
+        %april weeks
+        \gantttitle{\begin{sideways}\tiny05/04\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny12/04\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny19/04\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny26/04\end{sideways}}{1}
+        %may weeks
+        \gantttitle{\begin{sideways}\tiny03/05\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny10/05\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny17/05\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny24/05\end{sideways}}{1}
+        \gantttitle{\begin{sideways}\tiny31/05\end{sideways}}{1}
+        %june weeks
+        \gantttitle{\begin{sideways}\tiny07/06\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny14/06\end{sideways}}{1} 
+        \gantttitle{\begin{sideways}\tiny21/06\end{sideways}}{1} \\
+
+        %tasks
+        \ganttgroup{\textbf{Main Development}}{1}{18}\ganttnewline
+        \ganttbar{Single FPGA HLS}{1}{6} \ganttnewline
+        \ganttbar{Multi-FPGA hardware}{7}{8}
+        \ganttbar{}{10}{10} \ganttnewline
+        \ganttbar{Multi-FPGA HLS}{11}{11}
+        \ganttbar{}{13}{16} \ganttnewline
+        \ganttbar{Evaulation}{17}{18} \ganttnewline
+        \ganttbar[bar/.style={fill=yellow!70}]{\textit{Exams}}{9}{9}
+        \ganttbar[bar/.style={fill=yellow!70}]{}{12}{12} \ganttnewline
+        \ganttgroup{\textbf{Deliverables}}{16}{21} \ganttnewline
+        \ganttbar[bar right shift=-0.4]{Report Writing}{16}{20} \ganttnewline
+        \ganttmilestone{\textit{Abstract \& Initial Draft}}{18} \ganttnewline
+        \ganttmilestone{\textit{Final Submission}}{20} \ganttnewline
+        \ganttbar[bar right shift=-0.4]{Presentation Prep}{19}{21} \ganttnewline
+        \ganttmilestone{\textit{Presentation}}{21}
+        %relations 
+        \ganttlink{elem1}{elem4} 
+        \ganttlink{elem3}{elem4} 
+        \ganttlink{elem5}{elem6}
+    \end{ganttchart}
+\caption{Gantt chart showing proposed project time plan}
+\label{gantt}
+\end{figure}
+

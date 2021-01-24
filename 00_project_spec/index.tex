@@ -78,7 +78,7 @@ The analysis report serves to test whether the features implemented in SystemNai
 For the time-to-market metric we intend to compare against other available HLS tools as well as pure Verilog. Not only will the time-taken to implement a given system be considered but also the amount of extra research a user must do in order to achieve their desired design. Ideally, this evaluation will be done by asking a sample of individuals to implement a multi-FPGA system using a variety of tools.
 
 \subsubsection{Performance}
-On the other hand, the performance metric has a few more complications that we must consider. Firstly, performance is a vague term, and we must define more specific metrics in order to measure this value. There are two main metrics that shall be used in this report: 
+On the other hand, the performance metric has a few more complications that we must consider. Firstly, performance is a vague term, and we must define more specific metrics in order to measure this value. There are two main metrics that shall be used in this project: 
 
 \begin{itemize}
     \item \textbf{Latency}: The amount of time it takes for a system to compute it's intended function. Measured either in milliseconds or cycles.
@@ -91,7 +91,7 @@ The second issue is that tools such as Vivado HLS or LegUp have spent years in d
 
 Therefore, the methodology we intend to use to measure performance is to compare the latency and resource usage of a single FPGA system created using SystemNaim and a multi-FPGA system created from the same tool. This way we can identify the performance increase/decrease specifically attributed to the tool's method of implementing multi-FPGA systems. 
 
-The conclusion that we hope to draw from this, is that if this method of automating the connection between multiple FPGAs is beneficial then it is possible to expand this methodology to other tools. So even if the core HLS aspect of SystemNaim is subpar, the process by which it creates multi-FPGA systems adds value to the field of research.
+The conclusion that we hope to draw from this, is that if this method of automating the connection between multiple FPGAs is beneficial, then it is possible to expand this methodology to other tools. So even if the core HLS aspect of SystemNaim is subpar, the process by which it creates multi-FPGA systems adds value to the field of research.
 
 
 

@@ -21,6 +21,9 @@
 %\usepackage{multirow}
 \usepackage{makecell}
 \usepackage{biblatex}
+\usepackage{enumitem}
+\usepackage{pgfgantt}
+\usepackage{rotating}
 \addbibresource{main.bib}
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
@@ -45,14 +48,9 @@
     
     
     \input{00_project_spec/index.tex}
-    % \input{01_introduction/introduction.tex}
-    % \input{02_gamespec/main.tex}
+    \input{01_background/index.tex}
+    \input{02_implementation_plan/index.tex}
     % add more sections here!
-    
-    % \input{03_IITO_IIFO/IITO_IIFO.tex}
-    % \input{04_Rules_IIGO/rules_and_iigo}
-    % \input{05_Environment/environment}
-    % \input{06_Voting/voting.tex}
 
 \printbibliography
 \end{document}
