@@ -51,49 +51,12 @@ This project consists mainly of two deliverables, one is the HLS tool, SystemNai
 
 \subsection{SystemNaim}
 
-As previously stated, the aim of SystemNaim is to create a HLS tool which allows users to target a multi-FPGA system. However, we must acknowledge that this being an FYP there a time constraint which will limit the amount of work possible. Therefore, some limitations have been placed on the scope of SystemNaim in order to ensure that a working tool can be produced. They are as follows:
-
-\begin{itemize}
-    \item The input will be a single source file following a subset of ANSI C90. The limitations of the language are:
-    \begin{itemize}
-        \item Only integer types will be allowed.
-        \item Only local arrays will be allowed.
-        \item Structs \& enums will not be allowed.
-    \end{itemize}
-    \item Only two FPGAs will communicate with each other.
-\end{itemize}
-
-It should be noted that these limitations are subject to change and certain design choices will introduce more. Also, if work on the base tool is completed sooner than expected, some of these limitations will be removed and work will be done to increase scope of the tool. If this is the case then the two expansions that would be of most interest are the allowing of passing arrays between functions and more than two FPGAs communicating.
-
-The output of SystemNaim will be a collection of Verilog HDL files which perform the same computation as the provided input file and with each FPGA receiving its own top file. The target devices have yet to be decided, however, it is likely that regardless of this choice the output files will simply be accompanied by a guide on how to implement the design using the currently available synthesis tools. It is also yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. This choice will be made after the target device is chosen and depends upon the difficulty of incorporating these libraries into the tool.
-
-To prove the tool works, a minimum of two FPGAs will be used for test purposes. While these are not part of the deliverable, it is worth noting that there is an intrinsic hardware component to this project.
-
+As previously stated, the aim of SystemNaim is to create a HLS tool which allows users to target a multi-FPGA system. The tools should accept some source code and produce a set of Verilog files that work allow multiple FPGAs to work in tandem. However, we must acknowledge that this being an FYP there a time constraint which will limit the amount of work possible. Therefore, some limitations have been placed on the scope of SystemNaim and these are explored in \autoref{chap:Design}. 
 
 \subsection{Analytical Report/ Evaluation Plan}
 \label{subsec:eval_plan}
 
-The analysis report serves to test whether the features implemented in SystemNaim offers any benefit to the user. While all projects need a report such as this, it is much more important to this FYP as its entire purpose is to improve quantifiable metrics. To be specific, time-to-market and performance are the key metrics this tool should improve upon. It should be easier for a user to create a multi-FPGA system using SystemNaim than existing tools, and they should be able to observer a measurable speed up when doing so.
-
-\subsubsection{User Difficulty}
-For the time-to-market metric we intend to compare against other available HLS tools as well as pure Verilog. Not only will the time-taken to implement a given system be considered but also the amount of extra research a user must do in order to achieve their desired design. Ideally, this evaluation will be done by asking a sample of individuals to implement a multi-FPGA system using a variety of tools.
-
-\subsubsection{Performance}
-On the other hand, the performance metric has a few more complications that we must consider. Firstly, performance is a vague term, and we must define more specific metrics in order to measure this value. There are two main metrics that shall be used in this project: 
-
-\begin{itemize}
-    \item \textbf{Latency}: The amount of time it takes for a system to compute it's intended function. Measured either in milliseconds or cycles.
-    \item \textbf{Resource Usage}: The amount of resources a system takes up on an FPGA. Measures in number of LUTs, BRAMs and DSPs.
-\end{itemize}
-
-These metrics can be further broken down, however for the purpose of this project these will tell us all the information we need\footnote{Throughput may also be seen as important however with loop pipe-lining likely not being implemented it serves little purpose.}.
-
-The second issue is that tools such as Vivado HLS or LegUp have spent years in development and thus comparing the latency of a design produced by a product of their calibre versus something made in less than 6 months would not benefit any evaluation of the specific issue SystemNaim aims to solve. If we were to compare SystemNaim to an industry tool, we wouldn't be able to see the benefit of using multiple FPGAs to increase the performance of a system. Rather, we would merely see how much better optimised the Verilog that the industry tools produce is, over SystemNaim's output Verilog.
-
-Therefore, the methodology we intend to use to measure performance is to compare the latency and resource usage of a single FPGA system created using SystemNaim and a multi-FPGA system created from the same tool. This way we can identify the performance increase/decrease specifically attributed to the tool's method of implementing multi-FPGA systems. 
-
-The conclusion that we hope to draw from this, is that if this method of automating the connection between multiple FPGAs is beneficial, then it is possible to expand this methodology to other tools. So even if the core HLS aspect of SystemNaim is subpar, the process by which it creates multi-FPGA systems adds value to the field of research.
-
+The analysis report serves to test whether the features implemented in SystemNaim offers any benefit to the user. While all projects need a report such as this, it is much more important to this FYP as its entire purpose is to improve quantifiable metrics. To be specific, time-to-market and performance are the key metrics this tool should improve upon. It should be easier for a user to create a multi-FPGA system using SystemNaim than existing tools, and they should be able to observer a measurable speed up when doing so. The full definition of these metrics is provided in \autoref{chap:Eval}.
 
 
 

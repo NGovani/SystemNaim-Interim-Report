@@ -1,0 +1,23 @@
+\chapter{Design Plan}
+\label{chap:Design}
+
+\section{Introduction}
+This chapter will outline the design choices that have been made based on an assessment of personal ability and what has been learnt from the background research shown in \autoref{chap:Background}.
+
+\section{SystemNaim}
+
+\begin{itemize}
+    \item The input will be a single source file following a subset of ANSI C90. The limitations of the language are:
+    \begin{itemize}
+        \item Only integer types will be allowed.
+        \item Only local arrays will be allowed.
+        \item Structs \& enums will not be allowed.
+    \end{itemize}
+    \item Only two FPGAs will communicate with each other.
+\end{itemize}
+
+It should be noted that these limitations are subject to change and certain design choices will introduce more. Also, if work on the base tool is completed sooner than expected, some of these limitations will be removed and work will be done to increase scope of the tool. If this is the case then the two expansions that would be of most interest are the allowing of passing arrays between functions and more than two FPGAs communicating.
+
+The output of SystemNaim will be a collection of Verilog HDL files which perform the same computation as the provided input file and with each FPGA receiving its own top file. The target devices have yet to be decided, however, it is likely that regardless of this choice the output files will simply be accompanied by a guide on how to implement the design using the currently available synthesis tools. It is also yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. This choice will be made after the target device is chosen and depends upon the difficulty of incorporating these libraries into the tool.
+
+To prove the tool works, a minimum of two FPGAs will be used for test purposes. While these are not part of the deliverable, it is worth noting that there is an intrinsic hardware component to this project.
