@@ -1,15 +1,26 @@
-\chapter{Background \& Related Work}
+\chapter{Background}
 \label{chap:Background}
 
 \section{Introduction}
+
 The field of multi-FPGAs has been heavily researched however there are few papers interested in utilising HLS to streamline the process of implementing a multi-FPGA. \cite{564741} and \cite{707888} are examples of papers which do concern themselves with these topics but both were written over twenty years ago.
 
-Therefore, it is of interest to this project to do a review of the most up to date research in fields surrounding and including its scope. This chapter will go through three different topics:
+Therefore, it is of interest to this project to do a review of the most up to date research in fields surrounding and including its scope. This chapter will go through four different topics:
 
 \begin{itemize}
-    \item HLS tools and their optimisations
-    \item FPGA-to-FPGA communication protocols
+    \item Related works.
+    \item HLS tools and their optimisations.
+    \item FPGA-to-FPGA communication protocols.
     \item Multi-FPGA Logic Partitioning.
 \end{itemize}
 
 Thus, hopefully, giving the reader a better overview of what is possible if this project were to reach its full potential.
+
+\section{Related Work}
+
+As previously mentioned, \cite{564741} and \cite{707888} are papers which have already attempted to solve the issues raised by this project. The solution in the former uses the GNU C++ compiler as well as a method of describing the algorithm as a set of difference equations. One point the authors explicitly state is that they utilise C++'s operator overloading feature in order to map software operations to specific hardware modules. Nonetheless, once the circuit has been generated, it is then automatically partitioned using a method based on Fiducia-Mattheyses bi-partitioning heuristic \cite{1585498} with the goal of this stage to maximise logic utilisation in each FPGA as well as minimising IO consumption.
+
+The method by which the FPGAs communicated with each other is not discussed in the paper, all that is mentioned is the method used for partitioning. There is, however, mention of a host CPU, and it may be reasonable to assume that this CPU acts as a master for all FPGAs meaning there is no direct communication between FPGAs.
+
+The latter paper, \cite{707888}, opts to place a psuedo-processor on each FPGA within the topology and then have a top-level controller supply each FPGA with the instructions it is meant to execute. The HLS aspect then merely needs to convert the supplied source code into a list of instruction which is the intended use of standard compilers. The motivation for this approach was to make multi-FPGA systems more accessible to software developers, which is who the tool is targeted at. Alongside this, the paper also presents how it uses a 4 dimensional space, with one dimension being each FPGA system, to optimise the datapath of the system. This then utilises each FPGA whenever there is an opportunity for parallelism in the algorithm.
+
