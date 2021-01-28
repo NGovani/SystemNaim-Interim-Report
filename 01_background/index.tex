@@ -22,5 +22,17 @@ As previously mentioned, \cite{564741} and \cite{707888} are papers which have a
 
 The method by which the FPGAs communicated with each other is not discussed in the paper, all that is mentioned is the method used for partitioning. There is, however, mention of a host CPU, and it may be reasonable to assume that this CPU acts as a master for all FPGAs meaning there is no direct communication between FPGAs.
 
-The latter paper, \cite{707888}, opts to place a psuedo-processor on each FPGA within the topology and then have a top-level controller supply each FPGA with the instructions it is meant to execute. The HLS aspect then merely needs to convert the supplied source code into a list of instruction which is the intended use of standard compilers. The motivation for this approach was to make multi-FPGA systems more accessible to software developers, which is who the tool is targeted at. Alongside this, the paper also presents how it uses a 4 dimensional space, with one dimension being each FPGA system, to optimise the datapath of the system. This then utilises each FPGA whenever there is an opportunity for parallelism in the algorithm.
+The latter paper, \cite{707888}, opts to place a psuedo-processor on each FPGA within the topology and then have a top-level controller supply each FPGA with the instructions it is meant to execute. The HLS aspect then merely needs to convert the supplied source code into a list of instruction which is the intended use of standard compilers. The motivation for this approach was to make multi-FPGA systems more accessible to software developers, which it main target demographic. Alongside this, the paper also presents how it uses a 4 dimensional space, with one dimension being each FPGA system, to optimise the datapath of the system. This then supposedly creates a control path where the FPGAs are used in parallel wherever possible.
+
+\section{HLS Tools \& Optimisations}
+
+\subsection{Input Language}
+
+For the most part, HLS tools tend be based around compiling a subset of C or C++ to Verilog \cite{7368920}, however, there is an argument to be made that functional programming languages have a certain affinity towards hardware development. \cite{bjesse1998lava} presents an early form of the idea, Lava, which takes Haskell as input and produces circuit specifications. The tool was built in the early days of HDLs, and thus was intended to be a competitor rather than a part of the tool chain. More modern approaches such as \cite{hardcaml} are libraries for existing languages and instead produce Verilog or SystemVerilog which can be later synthesised by the appropriate tools. But why bother with straying so far from the norm. Well in \cite{7331371}, it is suggested that the firm mathematical founding in which functional languages are based can assist in verifying hardware designs as well as offering benefits such as recursive functions and type inference. While the author in \cite{Edwards2019FHWP}, suggests that the functional paradigm can allow for a greater exploitation of parallelism, one of the driving reason to using FPGAs. 
+
+Evidently, the field of research in using functional languages is of interest to quite a few individuals. \cite{7723553} lists a few papers in its introduction whilst also contributing to the field itself, but it has yet to be seen whether Functional HLS will overtake standard C-based HLS anytime soon.
+
+
+
+
 
