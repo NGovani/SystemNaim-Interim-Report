@@ -17,3 +17,6 @@ psuedo-processor
 datapath
 SystemVerilog
 HDLs
+Pipelining
+pipelining
+Bambu

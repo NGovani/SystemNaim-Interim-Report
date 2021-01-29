@@ -22,15 +22,35 @@ As previously mentioned, \cite{564741} and \cite{707888} are papers which have a
 
 The method by which the FPGAs communicated with each other is not discussed in the paper, all that is mentioned is the method used for partitioning. There is, however, mention of a host CPU, and it may be reasonable to assume that this CPU acts as a master for all FPGAs meaning there is no direct communication between FPGAs.
 
-The latter paper, \cite{707888}, opts to place a psuedo-processor on each FPGA within the topology and then have a top-level controller supply each FPGA with the instructions it is meant to execute. The HLS aspect then merely needs to convert the supplied source code into a list of instruction which is the intended use of standard compilers. The motivation for this approach was to make multi-FPGA systems more accessible to software developers, which it main target demographic. Alongside this, the paper also presents how it uses a 4 dimensional space, with one dimension being each FPGA system, to optimise the datapath of the system. This then supposedly creates a control path where the FPGAs are used in parallel wherever possible.
+The latter paper, \cite{707888}, opts to place a psuedo-processor on each FPGA within the topology and then have a top-level controller supply each FPGA with the instructions it is meant to execute. The HLS aspect then merely needs to convert the supplied source code into a list of instruction which is the intended use of standard compilers. The motivation for this approach was to make multi-FPGA systems more accessible to software developers, which is its main target demographic. Alongside this, the paper also presents how it uses a 4 dimensional space, with one dimension being each FPGA system, to optimise the datapath of the system. This then supposedly creates a control path where the FPGAs are used in parallel wherever possible.
 
 \section{HLS Tools \& Optimisations}
+
+\subsection{Introduction}
+
+Different HLS tools have vastly different implementations \cite{7368920} and many of them, especially commercial tools, do not reveal their methodologies. \cite{legup} for example, compiles the input source code using the LLVM compiler and then profiles it on a modified MIPS CPU emulator in order identify which parts of the code would benefit from hardware acceleration. It then synthesis those specific parts to dedicated hardware, while the rest of the code is run using a MIPS CPU programmed onto the FPGA.
+
+Vivado HLS, on the other hand, makes no attempt to suggest to the user where acceleration is possible. Rather, it merely gives you tools known as PRAGMAS, found in \cite{vivado-optmisation-manual}, to help the compiler better understand how to convert the C code to hardware. The output is then a set Verilog files the user can implement as they see fit, though it is recommended to use the Vivado Design Suite \cite{vivado-design-suite-manual} as part of the development cycle. As of now, Vivado has not revealed how they go from C to Verilog.
+
+A third contender is Bambu~\cite{6645550}, which leverages the GCC IR in order to optimise the resulting hardware and focuses mainly on memory intensive programs. In short, each implementation has its own intended purpose and thus excels in a specific area, but the fact that there are many implementations indicate that this field has much room from improvement and is actively under development.
 
 \subsection{Input Language}
 
 For the most part, HLS tools tend be based around compiling a subset of C or C++ to Verilog \cite{7368920}, however, there is an argument to be made that functional programming languages have a certain affinity towards hardware development. \cite{bjesse1998lava} presents an early form of the idea, Lava, which takes Haskell as input and produces circuit specifications. The tool was built in the early days of HDLs, and thus was intended to be a competitor rather than a part of the tool chain. More modern approaches such as \cite{hardcaml} are libraries for existing languages and instead produce Verilog or SystemVerilog which can be later synthesised by the appropriate tools. But why bother with straying so far from the norm. Well in \cite{7331371}, it is suggested that the firm mathematical founding in which functional languages are based can assist in verifying hardware designs as well as offering benefits such as recursive functions and type inference. While the author in \cite{Edwards2019FHWP}, suggests that the functional paradigm can allow for a greater exploitation of parallelism, one of the driving reason to using FPGAs. 
 
 Evidently, the field of research in using functional languages is of interest to quite a few individuals. \cite{7723553} lists a few papers in its introduction whilst also contributing to the field itself, but it has yet to be seen whether Functional HLS will overtake standard C-based HLS anytime soon.
+
+\subsection{Loop Pipelining}
+
+One of the major benefits of running a system on an FPGA is its ability to perform computation in parallel. Loop pipelining is a perfect example of this, where a HLS tool will take a for loop or while loop written in the source code and run segments of it concurrently in order to reach a low initiation interval(II). Page 120 of \cite{vivado-optmisation-manual} and page 11 of \cite{intel-hls-manual} show how the two leading HLS tools, Vivado HLS and Intel High Level Synthesis Compiler, implement pipelining respectively. The II is a measure of how many a new iteration of the loop can start and a lower value, ideally one, means that the section of code containing the loop will be computed faster. 
+
+There are issues, however, with attempting to reach an $II = 1$. \cite{7544750} explores how memory dependencies, two parts of a loop accessing the same memory resources, can cause increases in II due to the HLS compiler not being able to find a way to resolve these dependencies. Instead, is proposes the idea of splitting loops in order to reach an II of 1 on each of these sub-loops and then to pipe the data from one sub-loop to the next. Another approach show in \cite{7160061} opts to implement parametric hardware to resolve similar dependencies. 
+
+In summary, for simple programs with static loop behaviour the loop pipelining strategies found in commercial tools is very effective and likely the most important optimisation. However, when the behaviour becomes uncertain more effort is required on the user's side to help the compiler reach lower II's.
+
+\subsection{Data Streaming}
+
+
 
 
 
