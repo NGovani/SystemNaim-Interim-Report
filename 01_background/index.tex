@@ -50,6 +50,11 @@ In summary, for simple programs with static loop behaviour the loop pipelining s
 
 \subsection{Data Streaming}
 
+In order to process data in parallel on an FPGA the data must first be available to the device or module doing the processing, an obvious point but one that must be considered for any HLS system. In general, there are two approaches to solve the problem of ensuring data availability, the first is atomic transactions while the second is data streaming/dataflow. Say that we have two modules, $A$ and $B$ which are connected such that the output of $A$, which is an array, is the input of $B$. Let us also say that both modules iterate over an array doing some processing, i.e. multiplying the elements by 2 or adding 5, on said array. In an atomic system we would first let $A$ iterate over the entire array and then pass the array to $B$ and allow it to compute its function. 
+
+In this case, even though the modules themselves may be pipelined there isn't much parallelism being exploited on the module level. $B$ is sitting idle for the entire time $A$ is operating and vice-versa. The solution to this is dataflow, which is where every time $A$ completes an iteration it then passes that data to $B$ allowing to start its computation. This results in both modules being utilised at the same time and reduces the overall latency of the system. Section 3.3 of \cite{9264692} explores further, why a user might opt for this method and the considerations they must take if they choose to do so. 
+
+In relation to HLS tools, this optimisation is pivotal to achieving high throughput in any system that operators on large amount of data. Pages 20-24, 95-97 and 126-128 of \cite{vivado-optmisation-manual} show how Vivado HLS allows its users to access such functionality.
 
 
 
