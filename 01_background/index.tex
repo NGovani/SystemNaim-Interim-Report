@@ -26,6 +26,7 @@ The method by which the FPGAs communicated with each other is not discussed in t
 The latter paper, \cite{707888}, opts to place a psuedo-processor on each FPGA within the topology and then have a top-level controller supply each FPGA with the instructions it is meant to execute. The HLS aspect then merely needs to convert the supplied source code into a list of instruction which is the intended use of standard compilers. The motivation for this approach was to make multi-FPGA systems more accessible to software developers, which is its main target demographic. Alongside this, the paper also presents how it uses a 4 dimensional space, with one dimension being each FPGA system, to optimise the datapath of the system. This then supposedly creates a control path where the FPGAs are used in parallel wherever possible.
 
 \section{HLS Tools \& Optimisations}
+\label{sec:bg:hls}
 
 \subsection{Introduction}
 
@@ -77,12 +78,13 @@ In contrast, \textbf{Ethernet} allows the user to identify each device in their 
 Both have their place in the ecosystem with latest PCI-E generations reaching 128 GB/s \cite{pcie-speed} compared to Ethernet reaching at most 1.25 GB/s \cite{ether-speed}, whilst is Ethernet better suited for more complicated topologies with numerous hosts.
 
 \section{Logic Partitioning}
+\label{sec:logic_part}
 
 \subsection{Manual vs. Automatic}
 
 Logic partitioning concerns itself with how a designer split's the computation across the multi-FPGA system. Generally speaking, there are two approaches to this a manual split and an automatic split. A manual split is where the designer is given control of the computation processed on every FPGA, however usual implementations following this methodology tend to be a single design replicated on multiple FPGAs. \cite{10.1145/3020078.3021739, 10.1145/3358192, 10.1145/3337821.3337846} all have one FPGA overlay that supports communication either with a host or other peers and is able to slot into a pre-existing network in a modular fashion. Thus, it would seem that any manual splitting is done with scalability in mind and a repeatable design is used to reduce decrease complexity and development time.
 
-The second approach is an automatic split, and it seems that papers regarding this method tend to concern themselves with more general input than a specific use case. Both papers mentioned in \autoref{sec:related_work} and \cite{soton261305} are examples of this approach. Interestingly, \cite{707888} uses a similar practice to what was described of the manual approach by having a single design, that has a more general use-case, overlayed onto many FPGAs. Whereas \cite{564741, soton261305} instead opt to use a partitioning algorthim, which splits a design to fit the requested number of devices. 
+The second approach is an automatic split, and it seems that papers regarding this method tend to concern themselves with more general input than a specific use case. Both papers mentioned in \autoref{sec:related_work} and \cite{soton261305} are examples of this approach. Interestingly, \cite{707888} uses a similar practice to what was described of the manual approach by having a single design, that has a more general use-case, overlayed onto many FPGAs. Whereas \cite{564741, soton261305} instead opt to use a partitioning algorithm, which splits a design to fit the requested number of devices. 
 
 \subsection{Control Schema}
 
