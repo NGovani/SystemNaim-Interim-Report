@@ -17,6 +17,7 @@ Therefore, it is of interest to this project to do a review of the most up to da
 Thus, hopefully, giving the reader a better overview of what is possible if this project were to reach its full potential.
 
 \section{Related Work}
+\label{sec:related_work}
 
 As previously mentioned, \cite{564741} and \cite{707888} are papers which have already attempted to solve the issues raised by this project. The solution in the former uses the GNU C++ compiler as well as a method of describing the algorithm as a set of difference equations. One point the authors explicitly state is that they utilise C++'s operator overloading feature in order to map software operations to specific hardware modules. Nonetheless, once the circuit has been generated, it is then automatically partitioned using a method based on Fiducia-Mattheyses bi-partitioning heuristic \cite{1585498} with the goal of this stage to maximise logic utilisation in each FPGA as well as minimising IO consumption.
 
@@ -69,13 +70,22 @@ It seems that more modern implementations tend to use a standardised communicati
 
 While there are many options for communication mediums available to a designer, one must first question the purpose of the system in order to evaluate the efficacy of a communication method. 
 
-A \text{PCI-E} communication medium tends to be chosen when there is a single host communicating with multiple client's such as in \cite{10.1145/3337821.3337846} or \cite{6927459}. PCI-E does not allow for clients to interact directly with each other and instead only allows host-client communication. 
+A \textbf{PCI-E} communication medium tends to be chosen when there is a single host communicating with multiple client's such as in \cite{10.1145/3337821.3337846} or \cite{6927459}. PCI-E does not allow for clients to interact directly with each other and instead only allows host-client communication. 
 
 In contrast, \textbf{Ethernet} allows the user to identify each device in their topology with a number (MAC Address) and then lets each device send data to every other device in the network (Section 8 in \cite{6847097}) making it more suited to Peer-2-Peer systems. 
 
-Both have their place in the ecosystem with latest PCI-E generations reaching 128 GB/s \cite{pcie-speed} compared to Ethernet reaching at most 1.25 GB/s \cite{ether-speed}, whilst Ethernet better suited for more complicated topologies with numerous hosts.
+Both have their place in the ecosystem with latest PCI-E generations reaching 128 GB/s \cite{pcie-speed} compared to Ethernet reaching at most 1.25 GB/s \cite{ether-speed}, whilst is Ethernet better suited for more complicated topologies with numerous hosts.
 
 \section{Logic Partitioning}
 
-\subsec
+\subsection{Manual vs. Automatic}
 
+Logic partitioning concerns itself with how a designer split's the computation across the multi-FPGA system. Generally speaking, there are two approaches to this a manual split and an automatic split. A manual split is where the designer is given control of the computation processed on every FPGA, however usual implementations following this methodology tend to be a single design replicated on multiple FPGAs. \cite{10.1145/3020078.3021739, 10.1145/3358192, 10.1145/3337821.3337846} all have one FPGA overlay that supports communication either with a host or other peers and is able to slot into a pre-existing network in a modular fashion. Thus, it would seem that any manual splitting is done with scalability in mind and a repeatable design is used to reduce decrease complexity and development time.
+
+The second approach is an automatic split, and it seems that papers regarding this method tend to concern themselves with more general input than a specific use case. Both papers mentioned in \autoref{sec:related_work} and \cite{soton261305} are examples of this approach. Interestingly, \cite{707888} uses a similar practice to what was described of the manual approach by having a single design, that has a more general use-case, overlayed onto many FPGAs. Whereas \cite{564741, soton261305} instead opt to use a partitioning algorthim, which splits a design to fit the requested number of devices. 
+
+\subsection{Control Schema}
+
+Another aspect to logic partitioning, automatic or manual, is the method by which the workload is distributed. Once again, there seem to be two main approaches. One is for a host device to control each FPGA within system, supplying it with data and also telling it when to start execution. This seems to be the case for \cite{707888} and \cite{10.1145/3337821.3337846}.
+
+On the other hand, \cite{10.1145/3020078.3021739, 10.1145/3358192, soton261305} choose to allow each FPGA to perform its own computation and communicate, whenever it needs to, with other devices on the network. This method while having more critical points, is much more scalable than the first approach which results in a constraint being put upon the system by the hosts computational ability.
