@@ -57,7 +57,25 @@ In this case, even though the modules themselves may be pipelined there isn't mu
 In relation to HLS tools, this optimisation is pivotal to achieving high throughput in any system that operators on large amount of data. Pages 20-24, 95-97 and 126-128 of \cite{vivado-optmisation-manual} show how Vivado HLS allows its users to access such functionality.
 
 
+\section{FPGA-to-FPGA Communication}
 
+\subsection{Communication Medium}
 
+One of the major considerations that must be made when deciding the structure of a multi-FPGA system is the communication medium between the FPGAs. Many options are possible, \cite{10.1145/3358192} utilises SFP+ connections whilst \cite{10.1145/3337821.3337846} connects the board the PCI-E interface. Both examples require ports to be connected to FPGA I/O pins and are usually approaches that are, usually, only used when working development boards. If, one only has access to the pure FPGA itself, unlikely nowadays, then pin implementations are a much more apt choice. \cite{658564} goes into very fine detail about the necessity of a good pin assignment algorithm to reduce unnecessary resource consumption.
 
+It seems that more modern implementations tend to use a standardised communication medium such as Ethernet, PCI-E or Serial, which makes sense given the large overhead usually required when developing a new communication protocol. \cite{7890234} even explores making the communication medium agnostic to the user application, which allows the user logic to access a single interface which then handles to packaging of data for any medium. For example, one FPGA may only have access to an Ethernet port while another only has an RS232 port, but this system would allow these two FPGA's to transfer data between them.
+
+\subsection{Purpose of the System}
+
+While there are many options for communication mediums available to a designer, one must first question the purpose of the system in order to evaluate the efficacy of a communication method. 
+
+A \text{PCI-E} communication medium tends to be chosen when there is a single host communicating with multiple client's such as in \cite{10.1145/3337821.3337846} or \cite{6927459}. PCI-E does not allow for clients to interact directly with each other and instead only allows host-client communication. 
+
+In contrast, \textbf{Ethernet} allows the user to identify each device in their topology with a number (MAC Address) and then lets each device send data to every other device in the network (Section 8 in \cite{6847097}) making it more suited to Peer-2-Peer systems. 
+
+Both have their place in the ecosystem with latest PCI-E generations reaching 128 GB/s \cite{pcie-speed} compared to Ethernet reaching at most 1.25 GB/s \cite{ether-speed}, whilst Ethernet better suited for more complicated topologies with numerous hosts.
+
+\section{Logic Partitioning}
+
+\subsec
 
