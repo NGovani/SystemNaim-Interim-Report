@@ -1,1 +1,2 @@
 {"rule":"EN_A_VS_AN","sentence":"^\\QThe cause of this issue is two-fold, one is that FPGA usage isn't very well known and the second being the paradigm shift between programming in languages such as: C++ or python, and programming in a HDL like Verilog.\\E$"}
+{"rule":"MOST_COMPARATIVE","sentence":"^\\QEthernet has a very straightforward stack and Intel offers a variety of IP block which make interfacing with the PHY all the more easier.\\E$"}

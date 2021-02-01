@@ -1,8 +1,15 @@
 \chapter{Evaluation Plan}
 \label{chap:Eval}
 
+\section{Introduction}
+The evaluation of this project will not only be concerned with administrative metrics such as: were deadlines met, how much of the original scope was implemented? There will also be metrics evaluating the performance of the tool.
+
+Of special interest are two metrics, user difficulty and performance. SystemNaim aims to make it easier for users to implement multi-FPGA systems and thus one factor that it's success hinges on is the complexity of the tool to the user. This must be minimised for this endeavour to be at all useful, otherwise the user may as well have used pre-existing tool to implement their solution.
+
+Performance is also important. If there is too much of a performance decrease going to a multi-FPGA system using SystemNaim, then the tool once again becomes impractical for the user. Below is further explanation on 
+
 \section{User Difficulty}
-For the time-to-market metric we intend to compare against other available HLS tools as well as pure Verilog. Not only will the time-taken to implement a given system be considered but also the amount of extra research a user must do in order to achieve their desired design. Ideally, this evaluation will be done by asking a sample of individuals to implement a multi-FPGA system using a variety of tools.
+For the time-to-market metric we intend to compare against other available HLS tools as well as pure Verilog. Not only will the time-taken to implement a given system be considered but also the amount of extra research a user must do in order to achieve their desired design. Ideally, this evaluation will be done by asking a sample of individuals to implement a multi-FPGA system using a variety of tools, however, given the current state of things it may be difficult to find participants; thus the proposed back-up is to do a part qualitative part quantitative analysis of how difficult it was for a single person to implement a sample system using multiple methods.
 
 \section{Performance}
 On the other hand, the performance metric has a few more complications that we must consider. Firstly, performance is a vague term, and we must define more specific metrics in order to measure this value. There are two main metrics that shall be used in this project: 

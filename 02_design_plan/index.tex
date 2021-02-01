@@ -42,12 +42,32 @@ The method for implementing functions does allow for an interesting optimisation
 
 \subsubsection{Support for Multi-FPGAs}
 
+Since the aim of the FYP is to make it easier for users to implement multi-FPGA systems the way by which they can specify how the design is split amongst their devices is of particular importance. As discussed in \autoref{sec:logic_part}, the split can either be handled by the tool automatically or we can introduce some way for the user to explicitly state how the split occurs. The former option requires the implementation of an algorithm similar to the Fiducia-Mattheyses bi-partitioning heuristic \cite{1585498}, however, the latter option is interesting for one key reason; functions allow for a nicely defined splitting point between FPGAs. 
 
+If the tool gives the control of the partitioning to the user by allowing them to specify which functions they would like to be computed on a separate chip, the user may then be able to find better ways of optimising the system than the any algorithm implemented in the short time given for this FYP. Therefore, it has been decided that the grammar of the input source code will be modified to support users explicitly stating which functions are to be computed off chip.
+
+This will likely be implemented similarly to the new block scope mentioned above, with the difference being that there will be a number before each call, likely inside brackets, specifying which device to run the function on.
+
+With this proposed solution, the system then becomes similar to a host-client RPC(Remote Procedure Call) design. Where there is a single main FPGA, which then prompts the client FPGAs to start computing whilst also providing the input data.
 
 \subsection{Output}
 
 The output of SystemNaim will be a collection of Verilog HDL files which perform the same computation as the provided input file and with each FPGA receiving its own top file.
 
-The target devices have yet to be decided, however, it is likely that regardless of this choice the output files will simply be accompanied by a guide on how to implement the design using the currently available synthesis tools. It is also yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. This choice will be made after the target device is chosen and depends upon the difficulty of incorporating these libraries into the tool.
+The target devices is a Terasic DE0-SoC which holds an Intel Cyclone V FPGA, however the output code will most likely be agnostic to this knowledge. The output code will be synthesised using Intel's Quartus Prime and a guide will be provided to help users implement their design using Quartus. It is yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. However, anything that can be implemented using pure Verilog, will be. An analysis will be done to see if any other necessary IP blocks are easier to implement using the Intel IP Catalogue or with novel designs.
 
-To prove the tool works, a minimum of two FPGAs will be used for test purposes. While these are not part of the deliverable, it is worth noting that there is an intrinsic hardware component to this project.
+\section{Hardware Setup}
+
+\subsection{Communication Medium}
+
+Given that an RPC style design has been opted for in SystemNaim the best communication medium would probably be PCI-E as explained in \autoref{sec:bg:comm}. However, a lack of experience developing in PCI-E and the amount of work that would be necessary to set up functional hardware, make Ethernet a more appealing option. Ethernet has a very straightforward stack and Intel offers a variety of IP block which make interfacing with the PHY all the more easier. Thus, in the interest of ensuring the highest possible chance the project can be completed within the given time-frame Ethernet has been chosen as the communication medium for SystemNaim.
+
+It should be noted that there will be layers of abstraction between how the HLS tool calls functions and how that data is then sent over Ethernet. This is done so that if future work is done on SystemNaim, and it is decided that PCI-E would serve as a better medium, the change can be done without touching too much of the HLS part.
+
+\subsection{Scalability}
+
+It would be of interest to have a system with many FPGAs all connected to a single host FPGA, however due to the nature of the Ethernet stack having more than two devices connected to each other would require a large increase in workload. With more than two devices, the host must first send a broadcast to see which devices are available on the network, along with finding their MAC address and which functions they hold. With only two devices, we can assume that they are both online and make them broadcast all exchanges, thus vastly reducing the complexity. 
+
+Initially, SystemNaim will be built for only two devices to communicate, one host and one client. However, changing the design to accommodate for many clients is one of the highest priority extensions.
+
+

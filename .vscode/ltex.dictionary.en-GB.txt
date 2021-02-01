@@ -21,3 +21,6 @@ Pipelining
 pipelining
 Bambu
 overlayed
+NIOS
+Quartus
+Terasic
