@@ -6,7 +6,7 @@ This chapter will outline the design choices that have been made based on an ass
 
 Many limitations have been places on parts of the project, and this is mainly due to how inherently large the scope is. Years could be spent developing SystemNaim to refine into a tool that could compete with commercial products, but given the FYP only spans 6 months it was deemed that limiting the scope would be beneficial so that the aim of the project could be focused on.
 
-The \textbf{purpose} of this FYP is to show that it is possible to automate the process going from high-level code to a multi-FPGA system whilst still maintaining an acceptable level of performance. Therefore, in order to produce interesting results within the given time frame the tool will not be as complete as it supposedly could be. The following sections will go through what the potential scope could be and what reductions have been made to that scope, with justification, in order to make the purpose achievable.
+The \textbf{purpose} of this FYP is to show that it is possible to automate the process going from high-level code to a multi-FPGA system whilst still maintaining an acceptable level of performance. Therefore, in order to produce interesting results, within the given time frame, the tool will not be as complete as it supposedly could be. The following sections will go through what the potential scope could be and what reductions have been made to that scope, with justification, in order to make the purpose achievable.
 
 \section{HLS Tool}
 
@@ -18,7 +18,7 @@ Furthermore, there have been additional limitations placed upon the language:
 
 \begin{itemize}
     \item \textbf{The input will be a single source file}. Multiple files require pre-processing and linking to be implemented and offer only convenience to the user.
-    \item \textbf{Only integer types will be allowed}. There is little difference between types in hardware except for the width of data, and thus a system that works with 32-bit values would likely work with 16-bit values. The exception to this being floats, but regardless having multiple types in a program makes very little difference when considering how it well it would perform on a multi-FPGA system and adding multiple types to the HLS would also require the addition of type checking. Thus, only 32-bit integers are allowed.
+    \item \textbf{Only integer types will be allowed}. There is little difference between types in hardware except for the width of data, and thus a system that works with 32-bit values would likely work with 16-bit values, with the exception being floating point numbers. Regardless, having multiple types in a program makes very little difference when considering how it well it would perform on a multi-FPGA system and adding multiple types to the HLS would also require the addition of type checking. Thus, only 32-bit integers are allowed.
     \item \textbf{Only local arrays will be allowed}. The addition of shared memory is one that would add value towards the purpose of the project, since many systems do utilise this feature. However, the amount of work that would be needed to implement shared memory is likely more than can be afforded. This limitation, specifically, will be revisited once more work has been done the tool, and if it is able to implemented it will be,
     \item \textbf{Structs \& enums will not be allowed}. Reasoning for this is very similar to the argument against multiple types.
 \end{itemize}
@@ -32,11 +32,11 @@ Ideally the HLS aspect of SystemNaim would be able to implement both optimisatio
 
 As mentioned in \autoref{sec:bg:hls}, very few HLS tools reveal how they go from C to Verilog and thus the method used by SystemNaim is somewhat novel in the sense that while it won't create extremely optimised code it is relatively straight-forward to implement. 
 
-The general idea is that every line of code can be directly converted to a set of states in hardware, and we create an FSM which sequentially goes through all the states until it reaches the end. So, if we had some code that initialised a variable, multiplied it by two and then exited, this would be converted to an FSM with two states plus overhead; one for initialising the variable and the other for multiplying it by two. The rest of the states would be related starting the FSM and moving to a done state once the computation has been completed.
+The general idea is that every line of code can be directly converted to a set of states in hardware, and we create an FSM which sequentially goes through all the states created from the code until it reaches the end. So, if we had some code that initialised a variable, multiplied it by two and then exited, this would be converted to an FSM with two states plus overhead; one for initialising the variable and the other for multiplying it by two. The rest of the states would be related to starting the FSM and moving to a done state once the computation has been completed.
 
 Loops and if statements will break the sequential nature of the FSM but allowing them to jump to predefined states is a straightforward implementation.
 
-Functions will be implemented as their own Verilog modules, and follow a similar convention to the top FSM. Each module, will have a start and done signal which will be driven and monitored by the top FSM, respectively. The FSM will start the module at the appropriate time and then wait until the done signal is asserted after which continuing normal operation.
+Functions will be implemented as their own Verilog modules, and follow a similar convention to the top FSM. Each module, will have a start and done signal which will be driven and monitored, respectively, by the top FSM. The FSM will start the module at the appropriate time and then wait until the done signal is asserted after which continuing normal operation.
 
 The method for implementing functions does allow for an interesting optimisation that has relatively little work overhead. A modification to grammar will be made to support for parallel execution of functions. The modification will be a new block scope, where any function called within this scope will be started on the same cycle and once all functions have completed their computation the FSM will continue operation.
 
@@ -54,15 +54,15 @@ With this proposed solution, the system then becomes similar to a host-client RP
 
 The output of SystemNaim will be a collection of Verilog HDL files which perform the same computation as the provided input file and with each FPGA receiving its own top file.
 
-The target devices is a Terasic DE0-SoC which holds an Intel Cyclone V FPGA, however the output code will most likely be agnostic to this knowledge. The output code will be synthesised using Intel's Quartus Prime and a guide will be provided to help users implement their design using Quartus. It is yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. However, anything that can be implemented using pure Verilog, will be. An analysis will be done to see if any other necessary IP blocks are easier to implement using the Intel IP Catalogue or with novel designs.
+The target devices is a Terasic DE0-SoC which holds an Intel Cyclone V FPGA, however the output code will most likely be agnostic to this knowledge. The output code will be synthesised using Intel's Quartus Prime and a guide will be provided to help users implement their design using Quartus. It is yet to be decided whether pre-existing libraries for base functionality, such as arithmetic and memory access, will be used. However, anything that can be implemented using pure Verilog, will be. An analysis will be done to see if any other necessary IP blocks are easier to implement using the Intel IP Catalogue or with self-made designs.
 
 \section{Hardware Setup}
 
 \subsection{Communication Medium}
 
-Given that an RPC style design has been opted for in SystemNaim the best communication medium would probably be PCI-E as explained in \autoref{sec:bg:comm}. However, a lack of experience developing in PCI-E and the amount of work that would be necessary to set up functional hardware, make Ethernet a more appealing option. Ethernet has a very straightforward stack and Intel offers a variety of IP block which make interfacing with the PHY all the more easier. Thus, in the interest of ensuring the highest possible chance the project can be completed within the given time-frame Ethernet has been chosen as the communication medium for SystemNaim.
+Given that an RPC style design has been opted for in SystemNaim the best communication medium would probably be PCI-E as explained in \autoref{sec:bg:comm}. However, a lack of experience developing in PCI-E and the amount of work that would be necessary to set up functional hardware make Ethernet a more appealing option. Ethernet has a very straightforward stack and Intel offers a variety of IP block which make interfacing with the PHY all the more easier. Thus, in the interest of ensuring the highest possible chance the project can be completed within the given time-frame Ethernet has been chosen as the communication medium for SystemNaim.
 
-It should be noted that there will be layers of abstraction between how the HLS tool calls functions and how that data is then sent over Ethernet. This is done so that if future work is done on SystemNaim, and it is decided that PCI-E would serve as a better medium, the change can be done without touching too much of the HLS part.
+It should be noted that there will be layers of abstraction between how the HLS tool calls functions and how that data is then sent over Ethernet. This is done so that if future work is performed on SystemNaim, and it is decided that PCI-E would serve as a better medium, the change can be made without touching too much of the HLS part.
 
 \subsection{Scalability}
 
